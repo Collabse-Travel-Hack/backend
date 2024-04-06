@@ -15,7 +15,7 @@ class Settings(BaseSettings):
         env="DESCRIPTION",
     )
 
-    CH_HOST: str = Field("158.160.14.223", alias="CH_HOST", env="CH_HOST")
+    CH_HOST: str = Field("localhost", alias="CH_HOST", env="CH_HOST")
     CH_PORT: int = Field(9000, alias="CH_PORT", env="CH_PORT")
 
     kafka_seen_media_topic: str = Field(
