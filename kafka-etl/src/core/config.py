@@ -36,7 +36,7 @@ class Settings(BaseSettings):
     kafka_uploaded_topic: str = Field(
         "media-uploaded", alias="KAFKA_UPLOAD_TOPIC", env="KAFKA_UPLOAD_TOPIC"
     )
-    KAFKA_HOST: str = Field("158.160.14.223", alias="KAFKA_HOST", env="KAFKA_HOST")
+    KAFKA_HOST: str = Field("localhost", alias="KAFKA_HOST", env="KAFKA_HOST")
     KAFKA_PORT: int = Field(9094, alias="KAFKA_PORT", env="KAFKA_PORT")
     KAFKA_GROUP: str = Field("events", alias="KAFKA_PORT", env="KAFKA_GROUP")
 
