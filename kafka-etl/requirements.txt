@@ -1,0 +1,12 @@
+aiokafka==0.10.0
+annotated-types==0.6.0
+async-timeout==4.0.3
+clickhouse-driver==0.2.7
+packaging==23.2
+pydantic==2.6.3
+pydantic-settings==2.2.1
+pydantic_core==2.16.3
+python-dotenv==1.0.1
+pytz==2024.1
+typing_extensions==4.10.0
+tzlocal==5.2
