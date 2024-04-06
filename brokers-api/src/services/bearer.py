@@ -38,10 +38,7 @@ class JwtBearer(HTTPBearer):
         try:
             credentials: HTTPAuthorizationCredentials = await super().__call__(request)
             if not credentials:
-                raise BadRequest(
-                    status_code=HTTPStatus.FORBIDDEN,
-                    message="Invalid authorization code",
-                )
+                return None
             if not credentials.scheme == "Bearer":
                 raise BadRequest(
                     status_code=HTTPStatus.UNAUTHORIZED,
@@ -53,6 +50,8 @@ class JwtBearer(HTTPBearer):
             raise BadRequest(
                 status_code=HTTPStatus.UNAUTHORIZED, message="Service unavailable"
             )
+        except Exception as e:
+            print(e)
 
     @staticmethod
     async def get_account(token: str) -> Account:

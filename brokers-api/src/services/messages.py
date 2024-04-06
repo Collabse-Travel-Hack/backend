@@ -19,10 +19,10 @@ class MessageService(MessageServiceABC):
         self._broker = broker
 
     async def send_message(
-        self, topic: str, message: BaseEvent, account: Account
+        self, topic: str, message: BaseEvent, account: Account | None = None
     ) -> None:
         await self._broker.publish(
             topic=topic,
             message=message.model_dump_json(),
-            key=message.account_id.hex,
+            key=message.account_id.hex if message.account_id else "anonymus",
         )

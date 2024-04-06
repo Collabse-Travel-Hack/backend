@@ -28,7 +28,7 @@ class Settings(BaseSettings):
         "localhost:8000/api/v1/users", alias="PROFILE_ROUTE", env="PROFILE_ROUTE"
     )
     bootstrap_servers: str = Field(
-        "localhost:9094", alias="BOOTSTRAP_SERVERS", env="BOOTSTRAP_SERVERS"
+        "158.160.14.223:9094", alias="BOOTSTRAP_SERVERS", env="BOOTSTRAP_SERVERS"
     )
     client_id: str = Field("broker_service", alias="CLIENT_ID", env="CLIENT_ID")
     auto_offset_reset: str = Field(
