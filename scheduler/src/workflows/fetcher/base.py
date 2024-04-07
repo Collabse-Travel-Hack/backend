@@ -1,23 +1,17 @@
-from abc import ABC, abstractmethod
+import abc
+
+from src.workflows.config import settings
 
 
-class DatabaseABC(ABC):
-    @abstractmethod
-    def connect(self, **kwargs):
+class BaseFetcher(abc.ABC):
+    """Абстрактный класс для извлечения данных из хранилища данных.
+
+    Позволяет получать пакетами данные из выбранного источника хранения данных.
+    Способ получения данных может варироваться от базы данных с которой мы работаем
+    """
+
+    @abc.abstractmethod
+    def fetch_many(
+        self, query: dict = None, size: int = settings.batch_size, *args, **kwargs
+    ):
         pass
-
-    @abstractmethod
-    def disconnect(self):
-        pass
-
-    @abstractmethod
-    def find(self, *args, **kwargs):
-        ...
-
-    @abstractmethod
-    def insert(self, *args, **kwargs):
-        ...
-
-    @abstractmethod
-    def get_all(self, *args, **kwargs):
-        ...
