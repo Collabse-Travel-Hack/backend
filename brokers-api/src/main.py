@@ -5,6 +5,8 @@ from aiokafka import AIOKafkaProducer
 from fastapi import FastAPI, Request
 from fastapi.responses import ORJSONResponse
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from fastapi.middleware.cors import CORSMiddleware
+
 from src.api.v1 import events
 from src.broker import kafka
 from src.cli import cli
@@ -54,6 +56,14 @@ def create_app() -> FastAPI:
     app.include_router(events.router, prefix="/api/v1/events", tags=["События"])
 
     setup_dependencies(app)
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=False,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
     return app
 

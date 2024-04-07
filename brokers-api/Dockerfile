@@ -24,8 +24,10 @@ RUN apt-get update  \
     git  \
     wget \
     && wget -O - https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz | tar xzf - -C /usr/local/bin \
-    && apt-get autoremove -yqq --purge wget && rm -rf /var/lib/apt/lists/*  \
-    && python -m pip install --upgrade pip && pip install -r requirements.txt
+    && apt-get autoremove -yqq --purge wget && rm -rf /var/lib/apt/lists/*
+
+
+RUN python -m pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
 

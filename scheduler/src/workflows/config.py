@@ -4,13 +4,13 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="", env_file=".env")
-    cache_host: str = Field("localhost", alias="CACHE_HOST", env="REDIS_HOST")
+    cache_host: str = Field("158.160.14.223", alias="CACHE_HOST", env="REDIS_HOST")
     cache_port: int = Field("6379", alias="CACHE_PORT", env="CACHE_PORT")
     mongo_host: MongoDsn = Field(
         "mongodb://localhost:27017", alias="MONGO_HOST", env="MONGO_HOST"
     )
     elastic_host: str = Field(
-        "http://localhost:9200", alias="ELASTIC_HOST", env="ELASTIC_HOST"
+        "http://158.160.14.223:9200", alias="ELASTIC_HOST", env="ELASTIC_HOST"
     )
     elastic_collection: str = Field(
         "places", alias="ELASTIC_COLLECTION", env="ELASTIC_COLLECTION"

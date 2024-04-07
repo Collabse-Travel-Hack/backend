@@ -21,32 +21,37 @@ services:
 
 
   auth-api:
-    build: profiles-api
-    image: app-auth-api:dev
+    image: aadreik96/travel-auth:latest
     depends_on:
       - redis
       - postgres
-    env_file:
-      - envs/.env.api.auth
     ports:
       - "8000:8000"
     restart: unless-stopped
 
   broker-api:
-    build: brokers-api
-    image: app-auth-api:dev
+    image: aadreik96/travel-brokers
     depends_on:
       mongos:
         condition: service_healthy
     env_file:
-      - envs/.env.api.broker
+      - ./envs/.env.kafka
     ports:
       - "8001:8000"
     restart: unless-stopped
 
+
+  gateway:
+    image: aadreik96/travel-nginx
+    restart: unless-stopped
+    ports:
+      - 82:80
+    depends_on:
+      - broker-api
+      - auth-api
+
   elastic:
-      build: elastic/
-      image: app-elasticsearch
+      image: aadreik96/travel-elastic
       restart: unless-stopped
       volumes:
         - elastic-data:/usr/share/elasticsearch/data
@@ -54,13 +59,14 @@ services:
         - "9200:9200"
 
   kafka-etl:
-    build: kafka-etl
-    image: kafka-etl:dev
-    env_file:
-      - envs/.env.etl
+    image: aadreik96/kafka-etl
     restart: unless-stopped
 
-
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    volumes:
+      - auth-cache:/data
 
   mongo_cnf_n1:
     <<: *mongo-common
@@ -178,7 +184,7 @@ services:
     ports:
       - "27017:27017"
     environment:
-      - MONGO_INITDB_DATABASE=posts_db
+      - MONGO_INITDB_DATABASE=all_objects
     depends_on:
       config_rs1:
         condition: service_completed_successfully
@@ -187,11 +193,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
 
-  redis:
-    image: redis:latest
-    restart: unless-stopped
-    volumes:
-      - auth-cache:/data
+
 
 
   config_shared_cluster:
@@ -211,6 +213,9 @@ services:
         condition: service_healthy
 
 volumes:
+  auth-cache:
+  postgres-data:
+  elastic-data:
   mongo_cnf_n1_data:
   mongo_cnf_n2_data:
   mongo_rs1_n1_data:

@@ -46,6 +46,8 @@ async def main():
             await redis_client.client.aclose()
         if elastic.elastic_client:
             elastic.elastic_client.close()
+        if mongo_client.mongo_client:
+            mongo_client.mongo_client.close()
 
 
 if __name__ == "__main__":

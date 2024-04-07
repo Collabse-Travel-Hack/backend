@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     version: str = Field("1.0.0", alias="VERSION", env="VERSION")
     base_dir: str = str(Path(__file__).parent.parent)
     profile_route: str = Field(
-        "localhost:8000/api/v1/users", alias="PROFILE_ROUTE", env="PROFILE_ROUTE"
+        "auth-api:8000/api/v1/users", alias="PROFILE_ROUTE", env="PROFILE_ROUTE"
     )
     bootstrap_servers: str = Field(
         "158.160.14.223:9094", alias="BOOTSTRAP_SERVERS", env="BOOTSTRAP_SERVERS"
@@ -56,7 +56,9 @@ class Settings(BaseSettings):
     kafka_uploaded_topic: str = Field(
         "media-uploaded", alias="KAFKA_UPLOAD_TOPIC", env="KAFKA_UPLOAD_TOPIC"
     )
-    jaeger_host: str = Field("localhost:12497", alias="JAEGER_HOST", env="JAEGER_HOST")
+    jaeger_host: str = Field(
+        "jaeger-collector:12497", alias="JAEGER_HOST", env="JAEGER_HOST"
+    )
 
     backoff_max_retries: int = Field(
         5, alias="BACKOFF_MAX_RETRIES", env="BACKOFF_MAX_RETRIES"

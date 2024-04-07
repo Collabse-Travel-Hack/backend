@@ -18,11 +18,11 @@ class Settings(BaseSettings):
         env="DESCRIPTION",
     )
     version: str = Field("1.0.0", alias="VERSION", env="VERSION")
-    cache_host: str = Field("localhost", alias="CACHE_HOST", env="REDIS_HOST")
+    cache_host: str = Field("redis", alias="CACHE_HOST", env="REDIS_HOST")
     cache_port: int = Field("6379", alias="CACHE_PORT", env="CACHE_PORT")
     base_dir: str = str(Path(__file__).parent.parent)
     postgres_conn: PostgresDsn = Field(
-        "postgresql+asyncpg://app:123qwe@localhost:5432/users",
+        "postgresql+asyncpg://app:123qwe@postgres:5432/users",
         alias="DATABASE_CONN",
         env="DATABASE_CONN",
     )
@@ -41,10 +41,10 @@ class Settings(BaseSettings):
         1, alias="REQUESTS_INTERVAL", env="REQUESTS_INTERVAL"
     )
     jaeger_agent_host: str = Field(
-        "localhost", alias="JAEGER_AGENT_HOST", env="JAEGER_AGENT_HOST"
+        "jaeger-collection", alias="JAEGER_AGENT_HOST", env="JAEGER_AGENT_HOST"
     )
     jaeger_agent_port: int = Field(
-        4317, alias="JAEGER_AGENT_PORT", env="JAEGER_AGENT_PORT"
+        14250, alias="JAEGER_AGENT_PORT", env="JAEGER_AGENT_PORT"
     )
     authjwt_secret_key: str = Field(
         "secret", alias="JWT_SECRET_KEY", env="JWT_SECRET_KEY"

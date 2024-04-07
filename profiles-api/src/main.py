@@ -10,6 +10,8 @@ from fastapi.routing import APIRoute
 from fastapi_limiter import FastAPILimiter
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from redis.asyncio import Redis
+from fastapi.middleware.cors import CORSMiddleware
+
 from src.api.v1 import accounts, roles, socials, users
 from src.cli import cli
 from src.core.config import settings
@@ -158,6 +160,13 @@ app.include_router(accounts.router, prefix="/api/v1/accounts", tags=["Польз
 app.include_router(roles.router, prefix="/api/v1/roles", tags=["Роли"])
 app.include_router(users.router, prefix="/api/v1/users", tags=["Пользователи"])
 app.include_router(socials.router, prefix="/api/v1/socials", tags=["OAuth2"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 setup_dependencies(app)
 
