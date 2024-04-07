@@ -23,12 +23,12 @@ class ClickHouseClient:
 
         # Маппинг типов событий на соответствующие запросы
         self.query_mapping = {
-            "kafka_seen_media_events": "INSERT INTO kafka_seen_media_events (timestamp, account_id, product_id, media_type, media_id, media_name, user_agent) VALUES",
-            "kafka_clicked_events": "INSERT INTO kafka_clicked_events (timestamp, account_id, product_id, type, user_agent) VALUES",
-            "kafka_bookmarked_events": "INSERT INTO kafka_bookmarked_events (timestamp, account_id, product_id,  user_agent) VALUES",
-            "kafka_bought_events": "INSERT INTO kafka_bought_events (timestamp, account_id, product_id, price,  user_agent) VALUES",
-            "kafka_commented_events": "INSERT INTO kafka_commented_events (timestamp, account_id, product_id, text,  user_agent) VALUES",
-            "kafka_media_uploaded_events": "INSERT INTO kafka_media_uploaded_events (timestamp, account_id, product_id, media_type, media_id, media_name,  user_agent) VALUES",
+            "kafka_seen_media_events": "INSERT INTO kafka_seen_media_events (timestamp, account_id, product_id, media_type, media_id, media_name, author_id, event_type) VALUES",
+            "kafka_clicked_events": "INSERT INTO kafka_clicked_events (timestamp, account_id, product_id, type, author_id, event_type) VALUES",
+            "kafka_bookmarked_events": "INSERT INTO kafka_bookmarked_events (timestamp, account_id, product_id, author_id, event_type) VALUES",
+            "kafka_bought_events": "INSERT INTO kafka_bought_events (timestamp, account_id, product_id, price, author_id, event_type) VALUES",
+            "kafka_commented_events": "INSERT INTO kafka_commented_events (timestamp, account_id, product_id, text, author_id, event_type) VALUES",
+            "kafka_media_uploaded_events": "INSERT INTO kafka_media_uploaded_events (timestamp, account_id, product_id, media_type, media_id, media_name, author_id, event_type) VALUES",
         }
 
     async def flush_buffers_periodically(self):

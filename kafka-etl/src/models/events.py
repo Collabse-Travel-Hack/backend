@@ -1,4 +1,5 @@
 import datetime
+import uuid
 from dataclasses import dataclass
 from uuid import UUID
 
@@ -8,10 +9,12 @@ from src.schemas.media_type import MediaTypeEnum
 
 @dataclass
 class KafkaEvent:
-    timestamp: datetime.datetime
     account_id: UUID
     product_id: UUID
-    user_agent: str
+    user_agent: UUID
+    author_id: UUID | None = None
+    event_type: str | None = None
+    timestamp: datetime.datetime | None = None
 
 
 @dataclass
@@ -26,19 +29,19 @@ class KafkaBoughtEvent(KafkaEvent):
 
 @dataclass
 class KafkaClickedEvent(KafkaEvent):
-    type: ContentTypeEnum
+    type: ContentTypeEnum = ContentTypeEnum.description
 
 
 @dataclass
 class KafkaCommentedEvent(KafkaEvent):
-    text: str
+    text: str = ""
 
 
 @dataclass
 class KafkaMediaUploadedEvent(KafkaEvent):
-    media_type: MediaTypeEnum
-    media_id: UUID
-    media_name: str
+    media_type: MediaTypeEnum = MediaTypeEnum.image
+    media_id: UUID = uuid.uuid4()
+    media_name: str = ""
 
 
 @dataclass
