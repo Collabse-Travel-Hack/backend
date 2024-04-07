@@ -20,6 +20,19 @@ services:
       - postgres-data:/var/lib/postgresql/data
 
 
+  ml-api:
+    image: ryabuily/collabse-travel-ml-service:dev
+    restart: unless-stopped
+
+
+  search-api:
+    image: ryabuily/collabse-travel-elastic-search-api:dev
+    restart: unless-stopped
+
+  gigachat-api:
+    image: ryabuily/collabse-travel-gigachat-service:dev
+    restart: unless-stopped
+
   auth-api:
     image: aadreik96/travel-auth:latest
     depends_on:
@@ -28,6 +41,7 @@ services:
     ports:
       - "8000:8000"
     restart: unless-stopped
+
 
   broker-api:
     image: aadreik96/travel-brokers
@@ -56,7 +70,7 @@ services:
       volumes:
         - elastic-data:/usr/share/elasticsearch/data
       ports:
-        - "9200:9200"
+        - "9202:9200"
 
   kafka-etl:
     image: aadreik96/kafka-etl
@@ -182,7 +196,7 @@ services:
     hostname: mongos
     container_name: mongos
     ports:
-      - "27017:27017"
+      - "27018:27017"
     environment:
       - MONGO_INITDB_DATABASE=all_objects
     depends_on:
