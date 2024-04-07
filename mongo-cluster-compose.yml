@@ -11,12 +11,21 @@ x-mongo-common:
     start_period: 10s
 
 services:
+  postgres:
+    build: postgres/
+    image: app-postgres
+    env_file:
+      - envs/.env.database
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+
   auth-api:
     build: profiles-api
     image: app-auth-api:dev
     depends_on:
-      - redis-auth
-      - postgres-auth
+      - redis
+      - postgres
     env_file:
       - envs/.env.api.auth
     ports:
@@ -177,6 +186,13 @@ services:
         condition: service_completed_successfully
     volumes:
       - /etc/localtime:/etc/localtime:ro
+
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    volumes:
+      - auth-cache:/data
+
 
   config_shared_cluster:
     <<: *mongo-common
