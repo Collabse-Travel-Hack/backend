@@ -9,6 +9,7 @@ from src.models.commented import CommentedEvent
 from src.models.media_uploaded import MediaUploadedEvent
 from src.models.seen_media import SeenMediaEvent
 from src.schemas.account import Account
+from src.schemas.bookmarked import BookmarkEventSchema
 from src.schemas.bought import BoughtSchema
 from src.schemas.clicked import ClickedEventSchema
 from src.schemas.commented import CommentedEventSchema
@@ -27,7 +28,7 @@ router = APIRouter()
     tags=["События"],
 )
 async def send_bookmarked_event(
-    bookmarked_event: BookmarkedEvent,
+    bookmarked_event: BookmarkEventSchema,
     message_service: MessageServiceABC = Depends(),
     account: Annotated[Account, Depends(security_jwt)] = None,
     user_agent: Annotated[str | None, Header()] = None,
